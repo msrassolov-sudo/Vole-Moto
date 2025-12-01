@@ -1,0 +1,523 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<title>VOLE MOTO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ===== Кнопка адреса в верхнем баре ===== */
+
+.topbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+}
+
+.addressBtn {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    padding: 5px 10px;
+    background: #ffffff;
+    color: #0c7e0c;
+    font-weight: 900;
+    font-size: 14px;
+
+    border-radius: 8px;
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.25),
+        inset 0 0 4px rgba(255,255,255,0.4);
+
+    text-decoration: none;
+    border: 1px solid #0c7e0c;
+
+    transition: transform 0.15s ease;
+}
+
+.addressBtn:active {
+    transform: translateY(-50%) scale(0.92);
+}
+
+.topbarTitle {
+    font-size: 22px;
+    font-weight: 900;
+    color: #0c7e0c;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+/* ===== Цвета для VOLE и MOTO ===== */
+
+.voleBlack {
+    color: #000000 !important; /* черный */
+    font-weight: 900;
+}
+
+.motoGreen {
+    color: #0a660a !important; /* тёмно-зелёный */
+    font-weight: 900;
+}
+/* Общий фон и структура */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    color: #0a0a0a;
+    text-align: center;
+
+    background: linear-gradient(
+        to right,
+        #e4ffbf 0%,
+        #e4ffbf 12%,
+        #ffffff 50%,
+        #e4ffbf 88%,
+        #e4ffbf 100%
+    );
+}
+
+/* Верхняя зелёная полоса */
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    background: #e8ffe8;
+    border-bottom: 2px solid #17a317;
+    padding: 10px 0;
+
+    font-size: 22px;
+    font-weight: 900;
+    color: #0c7e0c;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.45),
+        inset 0 -3px 6px rgba(255,255,255,0.8),
+        inset 0 -1px 2px rgba(0,0,0,0.25);
+}
+
+.pageWrapper {
+    flex: 1;
+    padding-top: 80px;
+}
+
+.contentWrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 12px 30px;
+}
+
+/* Заголовки */
+h1 {
+    font-size: 28px;
+    margin: 10px 0 5px;
+    font-weight: 900;
+}
+
+h2 {
+    font-size: 22px;
+    margin: 15px 0 8px;
+    text-align: left;
+    padding-left: 5px;
+}
+
+h3 {
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+/* Текст */
+.promoText {
+    font-size: 17px;
+    margin: 8px auto 25px;
+    max-width: 680px;
+}
+
+/* Баннер */
+.banner {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto 12px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #fff;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.banner img {
+    width: 100%;
+    display: block;
+}
+
+/* Блок предложений */
+.offerBox {
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 20px 25px;
+
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+
+    background: white;
+    border-radius: 26px;box-shadow:
+    0 0 35px rgba(255,220,0,0.55),
+    inset 0 0 28px rgba(255,200,0,0.35);
+
+  
+
+    scroll-behavior: smooth;
+}
+
+.offerBox::-webkit-scrollbar {
+    height: 0;
+}
+
+.offerItem {
+    min-width: 160px;
+    padding: 10px;
+    border-radius: 14px;
+    background: white;
+    flex-shrink: 0;
+
+    box-shadow:
+        0 10px 20px rgba(0,0,0,0.25),
+        inset 0 0 6px rgba(255,255,255,0.55);
+}
+
+.offerItem img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.offerName {
+    font-size: 15px;
+    font-weight: 700;
+    margin-top: 4px;
+}
+
+.offerPrice {
+    font-size: 16px;
+    color: #0c7e0c;
+    font-weight: 900;
+}
+
+/* ================== Сетка кнопок (ПК) ================== */
+.grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    padding: 20px 10px;
+}
+
+.card {
+    width: 190px;
+    height: 190px;
+    margin: 0 auto;
+
+    background: white;
+    border-radius: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,0.35),
+        inset 0 0 8px rgba(255,255,255,0.6);
+
+    transition: 0.15s;
+}
+
+.card img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+}
+
+/* Футер */
+.footer {
+    background:#e8ffe8;
+    padding:15px;
+    border-top:2px solid #17a317;
+    font-weight:700;
+    color:#0c7e0c;
+}
+
+.viberLine {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+}
+
+.viberText {
+    color:#7F3FBF;
+    font-weight:900;
+}
+
+/* ================== АДАПТАЦИЯ ДЛЯ ТЕЛЕФОНОВ ================== */
+@media (max-width: 600px) {
+
+    h1 { font-size: 22px; }
+    h3 { font-size: 18px; }
+    .promoText { font-size: 15px; }
+
+    .banner {
+        max-width: 92%;
+        border-radius: 14px;
+    }
+
+    .offerBox {
+        padding: 14px 10px;
+        gap: 12px;
+        border-radius: 20px;
+    }
+
+    .offerItem {
+        min-width: 135px;
+        padding: 8px;
+    }
+
+    .offerItem img {
+        width: 110px;
+        height: 110px;
+    }
+
+    .offerName { font-size: 13px; }
+    .offerPrice { font-size: 14px; }
+
+/* ========== TAP EFFECTS (Только эффекты, без изменения размеров) ========== */
+
+.card {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.card:active {
+    transform: scale(0.92);
+    box-shadow:
+        0 3px 8px rgba(0,0,0,0.25),
+        inset 0 0 4px rgba(255,255,255,0.5);
+}
+
+.offerItem {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    cursor: pointer;
+}
+
+.offerItem:active {
+    transform: scale(0.95);
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.28),
+        inset 0 0 6px rgba(255,255,255,0.5);
+}
+
+    /* ==== КНОПКИ КАК НА ТВОЁМ СКРИНЕ ==== */
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        padding: 10px 15px;
+    }
+
+    .card {
+        width: 90px;
+        height: 90px;
+        border-radius: 18px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: white;
+
+        box-shadow:
+            0 6px 14px rgba(0,0,0,0.25),
+            inset 0 0 4px rgba(255,255,255,0.5);
+    }
+
+    .card img {
+        width: 55px;
+        height: 55px;
+        object-fit: contain;
+    }
+
+    .footer {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="topbar">
+  
+  <a class="addressBtn" 
+   href="https://www.google.com/maps/place/48.392603,35.050968"
+   target="_blank">
+   G-Maps
+</a>
+
+
+
+    <div class="topbarTitle">
+        <span class="voleBlack">VOLE</span> <span class="motoGreen">MOTO</span>
+    </div>
+    
+</div>
+
+<div class="pageWrapper">
+<div class="contentWrapper">
+
+<h1>Швидкість. Драйв. Надійність.</h1>
+
+<div class="banner">
+    <img src="icons/baner_logo.png">
+</div>
+
+<h3>Мотоцикли Б/В з Японіі. Без пробігу по Україні.</h3>
+
+<p class="promoText">
+    Спеціалізований магазин Б/У мототехніки з Японії, екіпірування та рішень для незалежного живлення.
+</p>
+
+<h2>Пропозиції:</h2>
+
+<div class="offerBox">
+
+    <div class="offerItem">
+        <img src="Moto_galery/Honda_CB500F.jpeg">
+        <div class="offerName">Honda CB500F</div>
+        <div class="offerPrice">4800$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/HONDA_CBR600RR.jpeg">
+        <div class="offerName">Honda CBR600RR</div>
+        <div class="offerPrice">6300$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/Kawasaki_Ninja650.jpeg">
+        <div class="offerName">Kawasaki Ninja 650</div>
+        <div class="offerPrice">6200$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/Kawasaki_Z400.jpeg">
+        <div class="offerName">Kawasaki Z400</div>
+        <div class="offerPrice">4500$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/KTM_Duke390.jpeg">
+        <div class="offerName">KTM Duke 390</div>
+        <div class="offerPrice">5100$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/Suzuki_GSX-S750.jpeg">
+        <div class="offerName">Suzuki GSX-S750</div>
+        <div class="offerPrice">5200$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/Suzuki_SV650.jpeg">
+        <div class="offerName">Suzuki SV650</div>
+        <div class="offerPrice">5500$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/Yamaha_MT-03.jpeg">
+        <div class="offerName">Yamaha MT-03</div>
+        <div class="offerPrice">3800$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/Yamaha_R6.jpeg">
+        <div class="offerName">Yamaha R6</div>
+        <div class="offerPrice">6500$</div>
+    </div>
+
+    <div class="offerItem">
+        <img src="Moto_galery/Yamaha_XJ6.jpeg">
+        <div class="offerName">Yamaha XJ6</div>
+        <div class="offerPrice">4500$</div>
+    </div>
+
+</div>
+
+<!-- ======= КНОПКИ ======= -->
+<div class="grid">
+
+    <div class="card" onclick="window.location.href='main_page.html'">
+        <img src="icons/home_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='novice.html'">
+        <img src="icons/junior_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='categories.html'">
+        <img src="icons/Categories_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='content.html'">
+        <img src="icons/content_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='equipment.html'">
+        <img src="icons/Eqip_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='myshops.html'">
+        <img src="icons/myShops_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='incoming.html'">
+        <img src="icons/delivery_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='energy.html'">
+        <img src="icons/Lights_icon.png">
+    </div>
+
+    <div class="card" onclick="window.location.href='company.html'">
+        <img src="icons/company_icon.png">
+    </div>
+
+</div>
+
+</div>
+</div>
+
+<div class="footer">
+    <span class="voleBlack">VOLE</span>-<span class="motoGreen">MOTO</span> • Контакти:<br>
+    📞 +3806342715925 <br>
+
+    <span class="viberLine">
+        <span class="viberText">VIBER</span> +380997558803
+    </span>
+
+    <br>Графік: 10:00–18:00
+</div>
+
+</body>
+</html>
